@@ -57,11 +57,17 @@ for sr in local_subreddits:
             f.write(sr + "\n")
         local_subreddits.remove(sr)
         print(sr, "banned, removed from list of local subreddits")
+        with open("local_subreddits/active", "w") as f:
+            for lsr in local_subreddits:
+                f.write(lsr + "\n")
     except exceptions.Redirect:
         with open("local_subreddits/not_found", "a") as f:
             f.write(sr + "\n")
         local_subreddits.remove(sr)
         print(sr, "not found, removed from list of local subreddits")
+        with open("local_subreddits/active", "w") as f:
+            for lsr in local_subreddits:
+                f.write(lsr + "\n")
     except Exception as e:
         print(type(e))
         print(e)
