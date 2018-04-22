@@ -7,9 +7,9 @@ Reddit bot for flagging links to Sinclair-owned websites.
 * praw
 
 ## Setup
-* git clone
-* pipenv install
-* create praw.ini
+* `git clone`
+* `pipenv install`
+* create `praw.ini`
 
 ```ini
 [BotName]
