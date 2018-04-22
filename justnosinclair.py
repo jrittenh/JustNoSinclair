@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import praw
+from prawcore import exceptions
 import re
 import os
 import time
@@ -43,16 +44,30 @@ for sr in local_subreddits:
                     posts_replied_to.append(submission.id)
                     with open("posts.replied_to", "a") as f:
                         f.write(post.id + "\n")
-    except:
-        with open("local_subreddits.removed", "w") as f:
+        print(sr)
+    except exceptions.Forbidden:
+        with open("local_subreddits.private", "a") as f:
             f.write(sr + "\n")
         local_subreddits.remove(sr)
-        print(sr, " removed from list of local subreddits")
+        print(sr, "is private, removed from list of local subreddits")
         with open("local_subreddits", "w") as f:
             for lsr in local_subreddits:
                 f.write(lsr + "\n")
-    time.sleep(1)
+    except exceptions.NotFound:
+        with open("local_subreddits.invalid", "a") as f:
+            f.write(sr + "\n")
+        local_subreddits.remove(sr)
+        print(sr, "banned, removed from list of local subreddits")
+    except exceptions.Redirect:
+        with open("local_subreddits.not_found", "a") as f:
+            f.write(sr + "\n")
+        local_subreddits.remove(sr)
+        print(sr, "not found, removed from list of local subreddits")
+    except Exception as e:
+        print(type(e))
+        print(e)
+    # ~ time.sleep(1)
 
-with open("posts.replied_to", "w") as f:
+with open("posts_replied_to", "w") as f:
     for post_id in posts_replied_to:
         f.write(post_id + "\n")
