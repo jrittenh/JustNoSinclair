@@ -25,10 +25,10 @@ else:
         sinclair_domains = list(filter(None, sinclair_domains))
         domains = "|".join(sinclair_domains)
 
-if not os.path.isfile("local_subreddits"):
+if not os.path.isfile("local_subreddits/active"):
     local_subreddits = ["politics"]
 else:
-    with open("local_subreddits", "r") as f:
+    with open("local_subreddits/active", "r") as f:
         local_subreddits = f.read()
         local_subreddits = local_subreddits.split("\n")
         local_subreddits = list(filter(None, local_subreddits))
@@ -43,24 +43,24 @@ for sr in local_subreddits:
                 quit()
                 submission.reply("The domain this post links to is owned or operated by [Sinclair Broadcast Group](https://en.wikipedia.org/wiki/List_of_stations_owned_or_operated_by_Sinclair_Broadcast_Group). PBS NewsHour [has reported on Sinclair's \"partisan tilt on trusted local news\"](https://youtu.be/zNhUk5v3ohE).  John Oliver has [featured a segment on his show](https://youtu.be/GvtNyOzGogc), Last Week Tonight, on Sinclair. Most recently, Sinclair has had an instance of numerous news reports using the exact same script for a Sinclair-provided segment [cut together and published on YouTube](https://youtu.be/hWLjYJ4BzvI).\n\nI am a bot. For any issues or to request to have your subreddit removed from my list, please report any issues to [my github repository](https://github.com/jrittenh/JustNoSinclair/issues).")
                 posts_replied_to.append(submission.id)
-                with open("posts.replied_to", "a") as f:
+                with open("posts_replied_to", "a") as f:
                     f.write(post.id + "\n")
         print(sr)
     except exceptions.Forbidden:
-        with open("local_subreddits.private", "a") as f:
+        with open("local_subreddits/private", "a") as f:
             f.write(sr + "\n")
         local_subreddits.remove(sr)
         print(sr, "is private, removed from list of local subreddits")
-        with open("local_subreddits", "w") as f:
+        with open("local_subreddits/active", "w") as f:
             for lsr in local_subreddits:
                 f.write(lsr + "\n")
     except exceptions.NotFound:
-        with open("local_subreddits.invalid", "a") as f:
+        with open("local_subreddits/invalid", "a") as f:
             f.write(sr + "\n")
         local_subreddits.remove(sr)
         print(sr, "banned, removed from list of local subreddits")
     except exceptions.Redirect:
-        with open("local_subreddits.not_found", "a") as f:
+        with open("local_subreddits/not_found", "a") as f:
             f.write(sr + "\n")
         local_subreddits.remove(sr)
         print(sr, "not found, removed from list of local subreddits")
