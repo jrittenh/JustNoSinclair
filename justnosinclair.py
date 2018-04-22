@@ -39,8 +39,6 @@ for sr in local_subreddits:
         for submission in subreddit.top(time_filter="hour", limit=50):
             if submission.id not in posts_replied_to and re.search(domains, submission.url, re.IGNORECASE) and time.time() - submission.created < 86400:
                 print("SINCLAIR", submission.title, " ", submission.url)
-                print(submission.created)
-                quit()
                 submission.reply("The domain this post links to is owned or operated by [Sinclair Broadcast Group](https://en.wikipedia.org/wiki/List_of_stations_owned_or_operated_by_Sinclair_Broadcast_Group). PBS NewsHour [has reported on Sinclair's \"partisan tilt on trusted local news\"](https://youtu.be/zNhUk5v3ohE).  John Oliver has [featured a segment on his show](https://youtu.be/GvtNyOzGogc), Last Week Tonight, on Sinclair. Most recently, Sinclair has had an instance of numerous news reports using the exact same script for a Sinclair-provided segment [cut together and published on YouTube](https://youtu.be/hWLjYJ4BzvI).\n\nI am a bot. For any issues or to request to have your subreddit removed from my list, please report any issues to [my github repository](https://github.com/jrittenh/JustNoSinclair/issues).")
                 posts_replied_to.append(submission.id)
                 with open("posts_replied_to", "a") as f:
