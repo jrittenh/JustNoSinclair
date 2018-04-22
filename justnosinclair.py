@@ -44,7 +44,7 @@ for sr in local_subreddits:
                     with open("posts.replied_to", "a") as f:
                         f.write(post.id + "\n")
     except:
-        with open("local_subreddits.removed") as f:
+        with open("local_subreddits.removed", "w") as f:
             f.write(sr + "\n")
         local_subreddits.remove(sr)
         print(sr, " removed from list of local subreddits")
