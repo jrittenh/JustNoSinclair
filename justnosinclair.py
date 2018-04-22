@@ -6,6 +6,18 @@ import re
 import os
 import time
 
+def remove_subreddit(sr_list, sr, error):
+    fn = error
+    fn.replace(" ", "_")
+    with open("local_subreddits/" + fn, "a") as f:
+        f.write(sr + "\n")
+    sr_list.remove(sr)
+    with open("local_subreddits/active", "w") as f:
+        for lsr in sr_list:
+            f.write(lsr + "\n")
+    print(sr + " is " + error + ", removed from list of local subreddits")
+
+
 reddit = praw.Reddit('JustNoSinclair')
 
 if not os.path.isfile("posts_replied_to"):
@@ -45,29 +57,11 @@ for sr in local_subreddits:
                     f.write(post.id + "\n")
         print(sr)
     except exceptions.Forbidden:
-        with open("local_subreddits/private", "a") as f:
-            f.write(sr + "\n")
-        local_subreddits.remove(sr)
-        print(sr, "is private, removed from list of local subreddits")
-        with open("local_subreddits/active", "w") as f:
-            for lsr in local_subreddits:
-                f.write(lsr + "\n")
+        remove_subreddit(local_subreddits, sr, "private")
     except exceptions.NotFound:
-        with open("local_subreddits/invalid", "a") as f:
-            f.write(sr + "\n")
-        local_subreddits.remove(sr)
-        print(sr, "banned, removed from list of local subreddits")
-        with open("local_subreddits/active", "w") as f:
-            for lsr in local_subreddits:
-                f.write(lsr + "\n")
+        remove_subreddit(local_subreddits, sr, "invalid")
     except exceptions.Redirect:
-        with open("local_subreddits/not_found", "a") as f:
-            f.write(sr + "\n")
-        local_subreddits.remove(sr)
-        print(sr, "not found, removed from list of local subreddits")
-        with open("local_subreddits/active", "w") as f:
-            for lsr in local_subreddits:
-                f.write(lsr + "\n")
+        remove_subreddit(local_subreddits, sr, "not found")
     except Exception as e:
         print(type(e))
         print(e)
