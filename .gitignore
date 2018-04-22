@@ -100,5 +100,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-#praw
+#praw/reddit
 praw.ini
+posts.replied_to
