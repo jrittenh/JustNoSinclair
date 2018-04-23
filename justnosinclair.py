@@ -8,7 +8,7 @@ import time
 
 reddit = praw.Reddit('JustNoSinclair')
 
-def read_text_list(filename):
+def read_text_set(filename):
     result = {}
     try:
         with open(filename) as f:
