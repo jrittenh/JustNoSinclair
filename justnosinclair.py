@@ -17,6 +17,18 @@ def read_text_set(filename):
         pass
     return result
 
+def remove_subreddit(sr_list, sr, error):
+    fn = error
+    fn.replace(" ", "_")
+    with open("local_subreddits/" + fn, "a") as f:
+        f.write(sr + "\n")
+    sr_list.remove(sr)
+    with open("local_subreddits/active", "w") as f:
+        for lsr in sr_list:
+            f.write(lsr + "\n")
+    print(sr + " is " + error + ", removed from list of local subreddits")
+
+
 posts_replied_to = read_text_set("posts_replied_to")
 domains = {_.lower() for _ in read_text_set("sinclair_domains")}
 local_subreddits = read_text_set("local_subreddits/active") or {"politics"}
