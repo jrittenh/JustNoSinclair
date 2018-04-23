@@ -47,7 +47,6 @@ try:
                     posts_replied_to.append(submission.id)
                     with open("posts_replied_to", "a") as f:
                         f.write(post.id + "\n")
-        print(sr)
 except exceptions.Forbidden:
     remove_subreddit(local_subreddits, sr, "private")
 except exceptions.NotFound:
