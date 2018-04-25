@@ -42,17 +42,18 @@ try:
             if submission.id not in posts_replied_to \
                 and re.search("|".join(domains), submission.url, re.IGNORECASE) \
                 and submission_timely:
-                    print("SINCLAIR" + submission.title + submission.url)
-                    submission.reply(comment)
-                    posts_replied_to.append(submission.id)
-                    with open("posts_replied_to", "a") as f:
-                        f.write(submission.id + "\n")
-except exceptions.Forbidden:
-    remove_subreddit(local_subreddits, sr, "private")
-except exceptions.NotFound:
-    remove_subreddit(local_subreddits, sr, "invalid")
-except exceptions.Redirect:
-    remove_subreddit(local_subreddits, sr, "not found")
+                    try:
+                        print("SINCLAIR" + submission.title + submission.url)
+                        submission.reply(comment)
+                        posts_replied_to.add(submission.id)
+                        with open("posts_replied_to", "a") as f:
+                            f.write(submission.id + "\n")
+                    except exceptions.Forbidden:
+                        remove_subreddit(local_subreddits, subreddit, "private")
+                    except exceptions.NotFound:
+                        remove_subreddit(local_subreddits, subreddit, "invalid")
+                    except exceptions.Redirect:
+                        remove_subreddit(local_subreddits, subreddit, "not found")
 except Exception as e:
     print(type(e))
     print(e)
