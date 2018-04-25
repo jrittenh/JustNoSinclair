@@ -35,7 +35,7 @@ local_subreddits = read_text_set("local_subreddits/active") or {"politics"}
 try:
     subreddits = (reddit.subreddit(sr) for sr in local_subreddits)
     for subreddit in subreddits:
-        for submission in subreddit.top(time_filter="hour", limit=50):
+        for submission in subreddit.hot(limit=50):
             submission_url = submission.url.lower()
             submission_timely = time.time() - submission.created < 86400
             if submission.id not in posts_replied_to \
