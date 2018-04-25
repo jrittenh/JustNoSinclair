@@ -102,4 +102,4 @@ ENV/
 
 #praw/reddit
 praw.ini
-posts.replied_to
+posts_replied_to
