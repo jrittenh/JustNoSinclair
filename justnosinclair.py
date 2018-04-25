@@ -46,7 +46,7 @@ try:
                     submission.reply(comment)
                     posts_replied_to.append(submission.id)
                     with open("posts_replied_to", "a") as f:
-                        f.write(post.id + "\n")
+                        f.write(submission.id + "\n")
 except exceptions.Forbidden:
     remove_subreddit(local_subreddits, sr, "private")
 except exceptions.NotFound:
@@ -56,8 +56,3 @@ except exceptions.Redirect:
 except Exception as e:
     print(type(e))
     print(e)
-# ~ time.sleep(1)
-
-with open("posts_replied_to", "w") as f:
-    for post_id in posts_replied_to:
-        f.write(post_id + "\n")
