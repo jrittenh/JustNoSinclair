@@ -36,12 +36,11 @@ try:
     subreddits = (reddit.subreddit(sr) for sr in local_subreddits)
     for subreddit in subreddits:
         for submission in subreddit.hot(limit=50):
-            submission_url = submission.url.lower()
             submission_timely = time.time() - submission.created < 86400
             if submission.id not in posts_replied_to \
                 and re.search("|".join(domains), submission.url, re.IGNORECASE) \
                 and submission_timely:
-                    print("SINCLAIR {submission.title} {submission.url}")
+                    print("SINCLAIR" + submission.title + submission.url)
                     submission.reply("The domain this post links to is owned or operated by [Sinclair Broadcast Group]"
                     "(https://en.wikipedia.org/wiki/List_of_stations_owned_or_operated_by_Sinclair_Broadcast_Group).\n\n"
                     "Rolling Stone just recently published an article titled [\"Sinclair Broadcasting's Hostile Takeover\"]"
