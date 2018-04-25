@@ -39,7 +39,7 @@ try:
             submission_url = submission.url.lower()
             submission_timely = time.time() - submission.created < 86400
             if submission.id not in posts_replied_to \
-                and submission_url in domains \
+                and re.search("|".join(domains), submission.url, re.IGNORECASE) \
                 and submission_timely:
                     print("SINCLAIR {submission.title} {submission.url}")
                     submission.reply("The domain this post links to is owned or operated by [Sinclair Broadcast Group]"
