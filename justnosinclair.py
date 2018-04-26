@@ -28,7 +28,8 @@ def remove_subreddit(sr_list, sr, error):
             f.write(lsr + "\n")
     print(sr + " is " + error + ", removed from list of local subreddits")
 
-posts_replied_to = read_text_set("posts_replied_to")
+# ~ posts_replied_to = read_text_set("posts_replied_to")
+posts_replied_to = [_.submission.id for _ in reddit.redditor(account).comments.new(limit=None)]
 
 domains = {_.lower() for _ in read_text_set("sinclair_domains")}
 
