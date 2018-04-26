@@ -17,4 +17,4 @@ reddit = praw.Reddit(account)
 for comment in reddit.redditor(account).comments.new(limit=None):
     if comment.body != comment_text:
         comment.edit(comment_text)
-        print(comment)
+        print(comment + " edited (post" + comment.submission.id + ")")
