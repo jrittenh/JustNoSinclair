@@ -38,7 +38,7 @@ local_subreddits = read_text_set("local_subreddits/active") or {"politics"}
 comment = ""
 
 with open('comment_text', 'r') as f:
-    comment = f.read()
+    comment = f.read().rstrip()
 
 try:
     subreddits = (reddit.subreddit(sr) for sr in local_subreddits)
