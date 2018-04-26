@@ -22,10 +22,10 @@ for message in reddit.inbox.messages(limit=None):
         if message.parent_id is None and not message.replies and banned_yn:
             if re.search('Note from the moderators', message.body):
                 print("Thank you reply")
-                # ~ message.reply(banned_with_note_reply_text)
+                message.reply(banned_with_note_reply_text)
             else:
                 print("Question reply")
-                # ~ message.reply(banned_reply_text)
+                message.reply(banned_reply_text)
         elif not message.replies and banned_yn:
             print(message.body)
     except Exception as e:
