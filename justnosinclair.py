@@ -29,11 +29,16 @@ def remove_subreddit(sr_list, sr, error):
     print(sr + " is " + error + ", removed from list of local subreddits")
 
 posts_replied_to = read_text_set("posts_replied_to")
+
 domains = {_.lower() for _ in read_text_set("sinclair_domains")}
+
 local_subreddits = read_text_set("local_subreddits/active") or {"politics"}
+
 comment = ""
+
 with open('comment_text', 'r') as f:
     comment = f.read()
+
 try:
     subreddits = (reddit.subreddit(sr) for sr in local_subreddits)
     for subreddit in subreddits:
