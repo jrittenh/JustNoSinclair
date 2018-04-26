@@ -43,23 +43,27 @@ with open('comment_text', 'r') as f:
 try:
     subreddits = (reddit.subreddit(sr) for sr in local_subreddits)
     for subreddit in subreddits:
-        for submission in subreddit.hot(limit=50):
-            submission_timely = time.time() - submission.created < 86400
-            if submission.id not in posts_replied_to \
-                and re.search("|".join(domains), submission.url, re.IGNORECASE) \
-                and submission_timely:
-                    try:
-                        print("SINCLAIR", submission.title, submission.url)
-                        submission.reply(comment)
-                        posts_replied_to.add(submission.id)
-                        with open("posts_replied_to", "a") as f:
-                            f.write(submission.id + "\n")
-                    except exceptions.Forbidden:
-                        remove_subreddit(local_subreddits, subreddit, "private")
-                    except exceptions.NotFound:
-                        remove_subreddit(local_subreddits, subreddit, "invalid")
-                    except exceptions.Redirect:
-                        remove_subreddit(local_subreddits, subreddit, "not found")
+        try:
+            for submission in subreddit.hot(limit=50):
+                submission_timely = time.time() - submission.created < 86400
+                if submission.id not in posts_replied_to \
+                    and re.search("|".join(domains), submission.url, re.IGNORECASE) \
+                    and submission_timely:
+                        try:
+                            print("SINCLAIR", submission.title, submission.url)
+                            submission.reply(comment)
+                            posts_replied_to.add(submission.id)
+                            with open("posts_replied_to", "a") as f:
+                                f.write(submission.id + "\n")
+                        except Exception as e:
+                            print(type(e))
+                            print(e)
+        except exceptions.Forbidden:
+            remove_subreddit(local_subreddits, subreddit, "private")
+        except exceptions.NotFound:
+            remove_subreddit(local_subreddits, subreddit, "invalid")
+        except exceptions.Redirect:
+            remove_subreddit(local_subreddits, subreddit, "not found")
 except Exception as e:
     print(type(e))
     print(e)
