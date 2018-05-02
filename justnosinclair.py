@@ -6,7 +6,9 @@ import re
 import os
 import time
 
-reddit = praw.Reddit('JustNoSinclair')
+account = 'JustNoSinclair'
+
+reddit = praw.Reddit(account)
 
 def read_text_set(filename):
     result = {}
