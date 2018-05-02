@@ -18,8 +18,9 @@ reddit = praw.Reddit('JustNoSinclair')
 for message in reddit.inbox.messages(limit=None):
     # ~ print(message.parent_id)
     try:
-        banned_yn = re.search('banned', message.subject)
+        banned_yn = re.search('banned .*r/(\w+)', message.subject)
         if message.parent_id is None and not message.replies and banned_yn:
+            reddit.subreddit(banned_yn.group(1)).unsubscribe
             if re.search('Note from the moderators', message.body):
                 print("Thank you reply")
                 message.reply(banned_with_note_reply_text)
