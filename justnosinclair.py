@@ -60,12 +60,14 @@ try:
                         except Exception as e:
                             print(type(e))
                             print(e)
-        except exceptions.Forbidden:
+        except (prawcore.exceptions.Forbidden, exceptions.Forbidden):
             remove_subreddit(local_subreddits, subreddit, "private")
-        except exceptions.NotFound:
+        except (prawcore.exceptions.NotFound, exceptions.NotFound):
             remove_subreddit(local_subreddits, subreddit, "invalid")
-        except exceptions.Redirect:
+        except (prawcore.exceptions.Redirect, exceptions.Redirect):
             remove_subreddit(local_subreddits, subreddit, "not found")
+        except KeyError:
+            remove_subreddit(local_subreddits, subreddit, "removed")
 except Exception as e:
     print(type(e))
     print(e)
