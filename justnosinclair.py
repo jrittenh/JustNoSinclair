@@ -22,11 +22,13 @@ def read_text_set(filename):
 def remove_subreddit(sr_list, sr, error):
     fn = error
     fn.replace(" ", "_")
-    with open("local_subreddits/" + fn, "a") as f:
-        f.write(sr.display_name.lower() + "\n")
+    fn_list = {_.lower() for _ in read_text_set("local_subreddits/" + fn)}
+    with open("local_subreddits/" + fn, "w") as f:
+        for lsr in fn_list.sort():
+            f.write(sr.display_name.lower() + "\n")
     sr_list.remove(sr)
     with open("local_subreddits/active", "w") as f:
-        for lsr in sr_list:
+        for lsr in sr_list.sort():
             f.write(lsr + "\n")
     print(sr + " is " + error + ", removed from list of local subreddits")
 
@@ -57,6 +59,8 @@ try:
                             posts_replied_to.add(submission.id)
                             with open("posts_replied_to", "a") as f:
                                 f.write(submission.id + "\n")
+                        except (prawcore.exceptions.Forbidden, exceptions.Forbidden):
+                            remove_subreddit(local_subreddits, subreddit, "banned")
                         except Exception as e:
                             print(type(e))
                             print(e)
