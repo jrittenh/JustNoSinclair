@@ -35,7 +35,7 @@ posts_replied_to = {_.submission.id for _ in reddit.redditor(account).comments.n
 
 domains = {_.lower() for _ in read_text_set("sinclair_domains")}
 
-local_subreddits = read_text_set("local_subreddits/active") or {"politics"}
+local_subreddits = {_.lower() for _ in read_text_set("local_subreddits/active")} or {"politics"}
 
 comment = ""
 
