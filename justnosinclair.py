@@ -23,7 +23,7 @@ def remove_subreddit(sr_list, sr, error):
     fn = error
     fn.replace(" ", "_")
     with open("local_subreddits/" + fn, "a") as f:
-        f.write(sr + "\n")
+        f.write(sr.display_name.lower() + "\n")
     sr_list.remove(sr)
     with open("local_subreddits/active", "w") as f:
         for lsr in sr_list:
