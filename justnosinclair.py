@@ -24,11 +24,11 @@ def remove_subreddit(sr_list, sr, error):
     fn.replace(" ", "_")
     fn_list = {_.lower() for _ in read_text_set("local_subreddits/" + fn)}
     with open("local_subreddits/" + fn, "w") as f:
-        for lsr in fn_list.sort():
-            f.write(sr.display_name.lower() + "\n")
+        for lsr in sorted(fn_list):
+            f.write(lsr.display_name.lower() + "\n")
     sr_list.remove(sr)
     with open("local_subreddits/active", "w") as f:
-        for lsr in sr_list.sort():
+        for lsr in sorted(sr_list):
             f.write(lsr + "\n")
     print(sr + " is " + error + ", removed from list of local subreddits")
 
