@@ -59,16 +59,16 @@ try:
                             posts_replied_to.add(submission.id)
                             with open("posts_replied_to", "a") as f:
                                 f.write(submission.id + "\n")
-                        except (prawcore.exceptions.Forbidden, exceptions.Forbidden):
+                        except exceptions.Forbidden:
                             remove_subreddit(local_subreddits, subreddit, "banned")
                         except Exception as e:
                             print(type(e))
                             print(e)
-        except (prawcore.exceptions.Forbidden, exceptions.Forbidden):
+        except exceptions.Forbidden:
             remove_subreddit(local_subreddits, subreddit, "private")
-        except (prawcore.exceptions.NotFound, exceptions.NotFound):
+        except exceptions.NotFound:
             remove_subreddit(local_subreddits, subreddit, "invalid")
-        except (prawcore.exceptions.Redirect, exceptions.Redirect):
+        except exceptions.Redirect:
             remove_subreddit(local_subreddits, subreddit, "not found")
         except KeyError:
             remove_subreddit(local_subreddits, subreddit, "removed")
