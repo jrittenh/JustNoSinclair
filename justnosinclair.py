@@ -26,10 +26,10 @@ def remove_subreddit(sr_list, sr, error):
         sr.unsubscribe()
     except Exception as e:
         print ("Unsubscribe error: (" + type(e) + ") " + e)
-    fn_list = _.lower() for _ in read_text_set("local_subreddits/" + fn)
+    fn_list = [_.lower() for _ in read_text_set("local_subreddits/" + fn)]
     with open("local_subreddits/" + fn, "w") as f:
         for lsr in sorted(fn_list):
-            f.write(lsr.display_name.lower() + "\n")
+            f.write(lsr + "\n")
     sr_list.remove(sr)
     with open("local_subreddits/active", "w") as f:
         for lsr in sorted(sr_list):
