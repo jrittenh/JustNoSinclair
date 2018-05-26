@@ -72,6 +72,9 @@ try:
             remove_subreddit(local_subreddits, subreddit, "not_found")
         except KeyError:
             remove_subreddit(local_subreddits, subreddit, "removed")
+        except Exception as e:
+            print(type(e))
+            print(e)
 except Exception as e:
     print(type(e))
     print(e)
