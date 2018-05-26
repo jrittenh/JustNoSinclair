@@ -69,7 +69,7 @@ try:
         except exceptions.NotFound:
             remove_subreddit(local_subreddits, subreddit, "invalid")
         except exceptions.Redirect:
-            remove_subreddit(local_subreddits, subreddit, "not found")
+            remove_subreddit(local_subreddits, subreddit, "not_found")
         except KeyError:
             remove_subreddit(local_subreddits, subreddit, "removed")
 except Exception as e:
