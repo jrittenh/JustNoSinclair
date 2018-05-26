@@ -56,7 +56,7 @@ try:
                         try:
                             print("SINCLAIR", "[" + subreddit.lower() + "]", submission.title, submission.url)
                             submission.reply(comment)
-                            posts_replied_to.add(submission.id)
+                            posts_replied_to.append(submission.id)
                             with open("posts_replied_to", "a") as f:
                                 f.write(submission.id + "\n")
                         except exceptions.Forbidden:
