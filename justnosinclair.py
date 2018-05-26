@@ -11,10 +11,10 @@ account = 'JustNoSinclair'
 reddit = praw.Reddit(account)
 
 def read_text_set(filename):
-    result = {}
+    result = []
     try:
         with open(filename) as f:
-            result = {_.strip() for _ in f if _}
+            result = [_.strip() for _ in f if _]
     except FileNotFoundError:
         pass
     return result
@@ -22,7 +22,7 @@ def read_text_set(filename):
 def remove_subreddit(sr_list, sr, error):
     fn = error
     fn.replace(" ", "_")
-    fn_list = [_.lower() for _ in read_text_set("local_subreddits/" + fn)]
+    fn_list = _.lower() for _ in read_text_set("local_subreddits/" + fn)
     with open("local_subreddits/" + fn, "w") as f:
         for lsr in sorted(fn_list):
             f.write(lsr.display_name.lower() + "\n")
@@ -54,7 +54,7 @@ try:
                     and re.search("|".join(domains), submission.url, re.IGNORECASE) \
                     and submission_timely:
                         try:
-                            print("SINCLAIR", "[" + subreddit + "]", submission.title, submission.url)
+                            print("SINCLAIR", "[" + subreddit.display_name.lower() + "]", submission.title, submission.url)
                             submission.reply(comment)
                             posts_replied_to.append(submission.id)
                             with open("posts_replied_to", "a") as f:
