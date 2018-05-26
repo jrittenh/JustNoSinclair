@@ -54,7 +54,7 @@ try:
                     and re.search("|".join(domains), submission.url, re.IGNORECASE) \
                     and submission_timely:
                         try:
-                            print("SINCLAIR", "[" + subreddit.lower() + "]", submission.title, submission.url)
+                            print("SINCLAIR", "[" + subreddit + "]", submission.title, submission.url)
                             submission.reply(comment)
                             posts_replied_to.append(submission.id)
                             with open("posts_replied_to", "a") as f:
