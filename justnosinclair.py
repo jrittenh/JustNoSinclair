@@ -22,6 +22,10 @@ def read_text_set(filename):
 def remove_subreddit(sr_list, sr, error):
     fn = error
     fn.replace(" ", "_")
+    try:
+        sr.unsubscribe()
+    except Exception as e:
+        print ("Unsubscribe error: (" + type(e) + ") " + e)
     fn_list = _.lower() for _ in read_text_set("local_subreddits/" + fn)
     with open("local_subreddits/" + fn, "w") as f:
         for lsr in sorted(fn_list):
@@ -37,7 +41,7 @@ posts_replied_to = [_.submission.id for _ in reddit.redditor(account).comments.n
 
 domains = {_.lower() for _ in read_text_set("sinclair_domains")}
 
-local_subreddits = [_.lower() for _ in read_text_set("local_subreddits/active")] or ["politics"]
+local_subreddits = [_.display_name.lower() for _ in reddit.user.subreddits(limit=None)] or [_.lower() for _ in read_text_set("local_subreddits/active")] or ["politics"]
 
 comment = ""
 
